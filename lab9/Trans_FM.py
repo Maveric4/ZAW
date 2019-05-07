@@ -25,13 +25,13 @@ ccor = domek_FFT * wzor_FFT.conj()
 R = ccor/np.abs(ccor)
 ifft2 = np.fft.ifft2(R)
 
-y,x = np.unravel_index( np.argmax(np.abs(ifft2)), ifft2.shape)
+y, x = np.unravel_index(np.argmax(np.abs(ifft2)), ifft2.shape)
 
 dx = x
 dy = y
 
-macierz_translacji = np.float32([[1,0,dx],[0,1,dy]])  # gdzie dx, dy -wektor przesuniecia
-obraz_przesuniety = cv2.warpAffine(uzupelniony_wzorzec, macierz_translacji,(uzupelniony_wzorzec.shape[1], uzupelniony_wzorzec.shape[0]))
+macierz_translacji = np.float32([[1,0,dx], [0,1,dy]])  # gdzie dx, dy -wektor przesuniecia
+obraz_przesuniety = cv2.warpAffine(uzupelniony_wzorzec, macierz_translacji, (uzupelniony_wzorzec.shape[1], uzupelniony_wzorzec.shape[0]))
 
 
 plt.gray()
