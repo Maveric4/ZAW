@@ -53,7 +53,7 @@ def pyramid(image, blur_nbr, k, sigma):
 
     for i in range(0, blur_nbr):
         blurred_img = cv2.GaussianBlur(prev_img,(0,0),sigmaX=k*sigma, sigmaY=k*sigma)
-        res_img[i] = prev_img - blurred_img
+        res_img[i] = blurred_img - prev_img
         prev_img = blurred_img
     return res_img
 

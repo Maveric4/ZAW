@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d50816a-e930-4eb8-b9d6-dfe24bdf5f97" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/lab10.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Harris.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scale_diff.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab9/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab8/.idea/lab8.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab8/.idea/lab8.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab8/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab8/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab8/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab8/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab8/PatternDetection.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lab8/PatternDetection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab9/.idea/lab9.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab9/.idea/lab9.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab9/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab9/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab9/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../lab9/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../lab9/Rot_scale_free.py" beforeDir="false" afterPath="$PROJECT_DIR$/../lab9/Rot_scale_free.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scale_diff.py" beforeDir="false" afterPath="$PROJECT_DIR$/scale_diff.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scale_diff.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
+            <state relative-caret-position="375">
+              <caret line="55" column="43" lean-forward="true" selection-start-line="55" selection-start-column="43" selection-end-line="55" selection-end-column="43" />
               <folding>
                 <element signature="e#42#52#0" expanded="true" />
               </folding>
@@ -202,8 +188,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scale_diff.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
+        <state relative-caret-position="375">
+          <caret line="55" column="43" lean-forward="true" selection-start-line="55" selection-start-column="43" selection-end-line="55" selection-end-column="43" />
           <folding>
             <element signature="e#42#52#0" expanded="true" />
           </folding>
