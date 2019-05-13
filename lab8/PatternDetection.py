@@ -17,7 +17,7 @@ def calc_contour(m_cx, m_cy):
 I = cv2.imread("trybik.jpg")
 IG = cv2.imread("trybik.jpg", cv2.IMREAD_GRAYSCALE)
 ret, thresh1 = cv2.threshold(IG, 150,255,cv2.THRESH_BINARY)
-contours, hierarchy = cv2.findContours(thresh1, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+im, contours, hierarchy = cv2.findContours(thresh1, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 contours = contours[1:]
 
 # # Finding main contour

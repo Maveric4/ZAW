@@ -27,7 +27,7 @@ shape_przeszukiwany_obrazG = przeszukiwany_obrazG.shape
 
 uzupelniony_wzorzecG = np.zeros(shape_przeszukiwany_obrazG)
 uzupelniony_wzorzecG_copy = copy.deepcopy(uzupelniony_wzorzecG)
-uzupelniony_wzorzecG_copy[:shape_wzor[0], :shape_wzor[1]] = wzorG
+uzupelniony_wzorzecG_copy[32:shape_wzor[0]+32, 32:shape_wzor[1]+32] = wzorG
 uzupelniony_wzorzecG[:shape_wzor[0], :shape_wzor[1]] = hanning2D(wzorG.shape[0])*wzorG
 
 uzupelniony_wzorzecG_FFT = np.fft.fft2(uzupelniony_wzorzecG)
