@@ -34,28 +34,30 @@ def calcH(imgG, size):
 def draw_max(img, coord):
     plt.figure()
     plt.imshow(img)
-    plt.plot(coord[1],coord[0],'*',color='r')
+    plt.plot(coord[1], coord[0], '*', color='r')
 
 
 # img2 = cv2.imread('fontanna2.jpg')
 # img1 = cv2.imread('fontanna1.jpg')
-img1 = cv2.imread('budynek1.jpg')
-img2 = cv2.imread('budynek2.jpg')
+# img1 = cv2.imread('budynek1.jpg')
+# img2 = cv2.imread('budynek2.jpg')
+img1 = cv2.imread('fontanna1.jpg')
+img2 = cv2.imread('fontanna_pow.jpg')
 
 img1G = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
 img2G = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
-ksize = 7
-threshold = 0.3
-img1_H = calcH(img1, ksize)
-img2_H = calcH(img2, ksize)
+# ksize = 7
+ksize = 5
+threshold = 0.25
+img1_H = calcH(img1G, ksize)
+img2_H = calcH(img2G, ksize)
 
 max_img1 = find_max(img1_H, ksize, threshold)
 max_img2 = find_max(img2_H, ksize, threshold)
 
 draw_max(img1, max_img1)
 draw_max(img2, max_img2)
-x = 10
 plt.show()
 
 
