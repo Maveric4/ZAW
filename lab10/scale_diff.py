@@ -63,7 +63,7 @@ img1G = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
 img2G = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
 ksize = 7
-threshold = 0.25
+threshold = 0.3
 sigma = 1.6
 k = 1.26
 # img1_H = calcH(img1, ksize)
@@ -71,18 +71,22 @@ k = 1.26
 
 img1_p = pyramid(img1G, 5, k, sigma)
 img2_p = pyramid(img2G, 5, k, sigma)
-
 max_img1 = find_max(img1_p, ksize, threshold)
 max_img2 = find_max(img2_p, ksize, threshold)
 
 for scale in range(0, 5):
     # Share a X axis with each column of subplots
-    fig = plt.figure(figsize=(18,8))
-    plt.subplot(1, 2, 1)
+    # fig = plt.figure(figsize=(18,8))
+    plt.figure()
+    plt.title("skala " + str(scale))
+    # plt.subplot(1, 2, 1)
     draw_max(img1, max_img1, scale)
-    plt.subplot(1, 2, 2)
+    # plt.subplot(1, 2, 2)
+    plt.figure()
+    plt.title("skala " + str(scale))
     draw_max(img2, max_img2, scale)
-    plt.show()
+
+plt.show()
 
 
 
