@@ -42,14 +42,14 @@ def draw_max(img, coord):
 # img1 = cv2.imread('budynek1.jpg')
 # img2 = cv2.imread('budynek2.jpg')
 img1 = cv2.imread('fontanna1.jpg')
-img2 = cv2.imread('fontanna_pow.jpg')
+img2 = cv2.imread('fontanna2.jpg')
 
 img1G = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
 img2G = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
 # ksize = 7
-ksize = 5
-threshold = 0.25
+ksize = 3
+threshold = 0.2
 img1_H = calcH(img1G, ksize)
 img2_H = calcH(img2G, ksize)
 
