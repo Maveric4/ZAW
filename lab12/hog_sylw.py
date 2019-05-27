@@ -14,14 +14,14 @@ def calc_comp_grad(im):
     dy = convolve1d(np.int32(im), np.array([-1, 0, 1]), 0)
 
     grad = np.sqrt(dx**2 + dy**2)
-    orient = np.arctan2(dy,dx)
+    orient = np.arctan2(dy, dx)
     return grad, orient
 
 
-im = cv2.imread('/home/student/ZAW/lab12/pedestrians/pos/per00060.ppm')
-plt.figure()
-plt.title('Person')
-plt.imshow(im)
+im = cv2.imread('pedestrians/pos/per00060.ppm')
+# plt.figure()
+# plt.title('Person')
+# plt.imshow(im)
 # plt.show()
 
 def calc_grad(im):
@@ -75,7 +75,7 @@ def calc_block_hist(im, grad, orient, YY_cell, XX_cell):
             M = M.flatten()
             T = T.flatten()
             # Obliczenie histogramu
-            for k in range(0,cellSize*cellSize):
+            for k in range(0, cellSize*cellSize):
                 m = M[k]
                 t = T[k]
                 # Usuniecie ujemnych kata (zalozenie katy w stopniach)
@@ -109,14 +109,14 @@ def calc_feat_vec(hist, YY_cell, XX_cell):
     F = []
     for jj in range(0,YY_cell-1):
         for ii in range(0,XX_cell-1):
-            H0 =  hist[jj,ii,:]
-            H1 =  hist[jj,ii+1,:]
-            H2 =  hist[jj+1,ii,:]
-            H3 =  hist[jj+1,ii+1,:]
+            H0 = hist[jj,ii,:]
+            H1 = hist[jj,ii+1,:]
+            H2 = hist[jj+1,ii,:]
+            H3 = hist[jj+1,ii+1,:]
             H = np.concatenate((H0, H1, H2, H3))
             n = np.linalg.norm(H)
-            Hn = H/np.sqrt(math.pow(n,2)+e)
-            F = np.concatenate((F,Hn))
+            Hn = H/np.sqrt(math.pow(n, 2)+e)
+            F = np.concatenate((F, Hn))
     return F
 
 #wyswietlanie gradientow obrazu
@@ -128,39 +128,74 @@ def calc_HOG(im):
     hist = calc_block_hist(im, grad, orient, YY_cell, XX_cell)
     return calc_feat_vec(hist, YY_cell, XX_cell)
 
+
 # feat_vec = calc_HOG(im)
-
-
-
-num_imgs = 30
-HOG_data = np.zeros([2*num_imgs,3781],np.float32)
+# Klasyfikator SVM
+num_imgs = 400
+HOG_data = np.zeros([2*num_imgs, 3781], np.float32)
 for i in range(0, num_imgs):
     IP = cv2.imread('pedestrians/pos/per%05d.ppm' %(i+1))
     IN = cv2.imread('pedestrians/neg/neg%05d.png' %(i+1))
     F = calc_HOG(IP)
-    HOG_data[i,0] = 1
-    HOG_data[i,1:] = F
+    HOG_data[i, 0] = 1
+    HOG_data[i, 1:] = F
     F = calc_HOG(IN)
-    HOG_data[i+num_imgs,0] = 0
-    HOG_data[i+num_imgs,1:] = F
+    HOG_data[i+num_imgs, 0] = 0
+    HOG_data[i+num_imgs, 1:] = F
 
-labels = HOG_data[:,0]
-data = HOG_data[:,1:]
+labels = HOG_data[:, 0]
+data = HOG_data[:, 1:]
 
-clf = svm.SVC(kernel='linear', C = 1.0)
-#Przeprowadzamy uczenie:
-clf.fit(data,labels)
+clf = svm.SVC(kernel='linear', C=1.0)
+# Przeprowadzamy uczenie:
+clf.fit(data, labels)
 # Testujemy:
+print(data)
 lp = clf.predict(data)
-print(lp)
 
+TP = [x == 1 for x in lp[:int(np.floor(lp.size/2))]]
+FP = [x == 1 for x in lp[int(np.floor(lp.size/2)):]]
+TN = [x != 1 for x in lp[int(np.floor(lp.size/2)):]]
+FN = [x != 1 for x in lp[:int(np.floor(lp.size/2))]]
+print(TP)
+print(TN)
+print("Accuracy: ", (np.sum(TP) + np.sum(TN))/lp.size*100, "%")
 
+# Detekcja na obrazie rzeczywistym
+#
+import cv2
+test = cv2.imread('pedestrians/pos/per00060.ppm')
+# print(test.shape)
+for i in range(1, 5):
+    im = cv2.imread('testImages/testImage%d.png' %i)
+    # print(im.shape[0])
+    im_show = im.copy()
 
+    # print(test.shape)
+    # print(IP.shape)
+    # IP[:test.shape[0], :test.shape[1], :] = test
+    step = 16
+    print(im.shape)
+    for ii in range(0, im.shape[0]-test.shape[0], step):
+        for jj in range(0, im.shape[1]-test.shape[1], step):
+            frag = im[ii:ii+test.shape[0], jj:jj+test.shape[1], :]
+            # print("frag", frag)
+            feat_vec = calc_HOG(frag)
+            # print(feat_vec.reshape(1, -1))
+            isHuman = clf.predict(feat_vec.reshape(1, -1))
+            # print("predicted is Human: ", isHuman)
+            if isHuman:
+                cv2.rectangle(im_show, (jj, ii), (jj + test.shape[1], ii + test.shape[0]), color=(0, 0, 255), thickness=1)
+                plt.figure()
+                plt.imshow(frag)
+                print("found")
 
+        print(ii, " / ", im.shape[0] - test.shape[0])
+    plt.figure()
+    plt.imshow(im_show)
+    # cv2.imshow("Real Image", im_show)
+    # cv2.waitKey(0)
 
-
-
-
-
+plt.show()
 
 
