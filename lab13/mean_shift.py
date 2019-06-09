@@ -17,14 +17,17 @@ def track_init(event, x, y, flags, param):
 
 # # Wczytanie pierwszego obrazka
 I = cv2.imread('track_seq/track00100.png')
-# cv2.namedWindow('Tracking')
-# cv2.setMouseCallback('Tracking',track_init, param=I)
-# # Pobranie klawisza
-# while 1:
-#     cv2.imshow('Tracking', I)
-#     k = cv2.waitKey(20) & 0xFF
-#     if k == 27:   # ESC
-#         break
+cv2.namedWindow('Tracking')
+cv2.setMouseCallback('Tracking',track_init, param=I)
+# Pobranie klawisza
+while 1:
+    cv2.imshow('Tracking', I)
+    k = cv2.waitKey(20) & 0xFF
+    if k == 27:   # ESC
+        break
+
+print("mouseX:", mouseX)
+print("mouseY:", mouseY)
 
 #Generowanie Gaussa
 # kernel_size = 45                        #rozmiar rozkladu
@@ -34,17 +37,17 @@ y = x[:, np.newaxis]                    # wektor pionowy
 x0 = y0 = kernel_size // 2              # wsp. srodka
 G = 1/(2*math.pi*sigma**2)*np.exp(-0.5*((x-x0)**2 + (y-y0)**2) / sigma**2)
 
-mouseX = 812
-mouseY = 406
+# mouseX = 831
+# mouseY = 435
 xS = mouseX-kernel_size//2
 yS = mouseY-kernel_size//2
 I_HSV = cv2.cvtColor(I, cv2.COLOR_BGR2HSV)
 
-plt.figure(1)
-plt.gray()
-plt.imshow(I_HSV[:, :, 0])
-plt.title('H in HSV')
-plt.show()
+# plt.figure(1)
+# plt.gray()
+# plt.imshow(I_HSV[:, :, 0])
+# plt.title('H in HSV')
+# plt.show()
 
 ## Obliczanie histogramu
 # I_H = I_HSV[:, :, 0]
@@ -55,11 +58,11 @@ plt.show()
 #         hist_q[pixel_H] += G[jj, ii]
 
 # Obliczanie histogramu wzorca - Szybciej
-I_H = I_HSV[:, :, 0]
+I_H_q = I_HSV[:, :, 0]
 hist_q = np.zeros((256, 1), float)
 for u in range(256):
-    mask = I_H[yS:yS + kernel_size, xS:xS + kernel_size] == u
-    hist_q[u] = np.sum(G[mask])
+    mask_q = I_H_q[yS:yS + kernel_size, xS:xS + kernel_size] == u
+    hist_q[u] = np.sum(G[mask_q])
 
 hist_q_norm = hist_q/np.sum(hist_q)
 
@@ -68,6 +71,7 @@ for i in range(101, num_imgs):
     I = cv2.imread('track_seq/track%05d.png' %i)
     I_HSV = cv2.cvtColor(I, cv2.COLOR_BGR2HSV)
     I_H = I_HSV[:, :, 0]
+
     hist_p = np.zeros((256, 1), float)
     for c in range(256):
         mask = I_H[yS:yS + kernel_size, xS:xS + kernel_size] == c
@@ -79,18 +83,16 @@ for i in range(101, num_imgs):
     array = np.zeros((kernel_size, kernel_size))
     for jj in range(kernel_size):
         for ii in range(kernel_size):
-            array[jj, ii] = wsp_Bhattacharyya[I_H[yS:yS+jj, xS:xS+ii]] * G(jj, ii)
+            array[jj, ii] = wsp_Bhattacharyya[I_H[yS+jj, xS+ii]] * G[jj, ii]
 
-    M = cv2.moments(array)
+    M = cv2.moments(array, 1)
     cx = int(M['m10'] / M['m00'])
     cy = int(M['m01'] / M['m00'])
 
-    yS = cy - kernel_size//2
-    xS = cx - kernel_size//2
+    yS += cy - kernel_size//2
+    xS += cx - kernel_size//2
 
-
-    cv2.rectangle(I, yS, xS)
-
+    cv2.rectangle(I, (xS-kernel_size//2, yS-kernel_size//2), (xS+kernel_size//2, yS+kernel_size//2), color=(255, 0, 0))
 
     cv2.imshow("Video", I)
     cv2.waitKey(1)
